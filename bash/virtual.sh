@@ -9,7 +9,7 @@ if [ $? -ne 0 ];then
      echo "Installing lxd in the virtual machine"
      sudo snap install lxd
      if [ $? -ne 0 ];then
-     #failed to install lsd -exit with an errormessage status
+     #failed to install lxd in the machine
      exit 1
      fi
  fi
@@ -17,11 +17,11 @@ if [ $? -ne 0 ];then
 # installing the sudo--init
 ip a | grep -w "lxdbr0" > /dev/null
 if [ $? -ne 0 ];then
-     #need to install
+     #need to install sudo--init
      echo "Initializing interface"
      lxd init --auto
      if [ $? -ne 0 ];then
-     #failed to install lsd -exit with an errormessage status
+     #failed to install sudo--init 
      exit 1
      fi
  fi
@@ -33,7 +33,7 @@ if [ $? -ne 0 ];then
      echo "Initializing interface"
      lxc launch ubuntu:20.04 COMP2101-S22
      if [ $? -ne 0 ];then
-     #failed to install lsd -exit with an errormessage status
+     #failed to launch a container running ubuntu 20.04 server
      exit 1
      fi
  fi
@@ -45,11 +45,11 @@ sudo sed -i.bkp " 2a $ip \t COMP2101-S22" /etc/hosts
 ##installing Apache2 
 lxc exec COMP2101-S22 -- which apache2 > /dev/null
 if [ $? -ne 0 ];then
-     #need to install
+     #need to install apache 2
      echo "Initializing interface"
      lxc exec COMP2101-S22 -- apt install apache2 -y >> /dev/null
      if [ $? -ne 0 ];then
-     #failed to install lsd -exit with an errormessage status
+     #failed to install apache2
      exit 1
      fi
  fi
