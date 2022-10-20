@@ -1,14 +1,36 @@
 #!/bin/bash
-echo -e "Report for myvm\n==============="
-#Setting the system’s fully-qualified domain name (FQDN)
-echo "FQDN:$(hostname)"
+#########
+   #Variables
+###########
 
-#Setting  the  operating system name and version,
-echo -e "Operating system name and Version: $(lsb_release -d | awk '{print $2,$3'})"
+# setting up the hostname
+Hostname=$(hostname)
 
-#Setting any IP addresses the machine has;
-echo -e "IP Adresses: $(hostname -I)"
+#Setting up the operating system name
+System=$(lsb_release -d | awk '{print $2,$3'})
 
-#Setting the amount of space available in only the root filesystem
-echo -e "Root Filesystem free space : $(df -h /dev/sda3 | awk '{print $4'}| tail -1)"
-echo -e "================"
+#Setting up the ip address of the machine
+IP=$(ip route | grep -w "default" | awk '{print $3}')
+
+##Setting the amount of space available in only the root filesystem
+Root=$(df -h /dev/sda3 | awk '{print $4'}| tail -1)
+
+# Setting up the version of the operating system
+Version=$(lsb_release -c | awk '{print $2,$3'})
+	
+###########
+ #Main
+#############
+ 
+ 
+ 
+cat << EOF
+
+================
+FQDN:$Hostname
+Operating system name and Version: $System / $Version
+IP Adresses: $IP
+Root Filesystem free space : $Root
+================
+
+EOF
