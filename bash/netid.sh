@@ -76,7 +76,7 @@ EOF
 interface="ens33"
 
 
-#Solution for the task 1####
+#Script for the task 1####
 i=1
 while [ $i -gt 0 ]; do
 	read -p "Enter interface name: " interface
@@ -144,7 +144,7 @@ network_address=$(ip route list dev $interface scope link|cut -d ' ' -f 1)
 network_number=$(cut -d / -f 1 <<<"$network_address")
 network_name=$(getent networks $network_number|awk '{print $interface}')
 
-#Solutions for the task 2###
+#Script for the task 2###
 netstat -i | awk '{print $1}' | tail -n +3 | head -n -1 > list.txt
 list=$(cat list.txt)
 echo "The available interfaces are: "
