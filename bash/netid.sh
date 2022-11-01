@@ -76,7 +76,7 @@ EOF
 interface="ens33"
 
 
-#Script for the task 1####
+#Scripts
 i=1
 while [ $i -gt 0 ]; do
 	read -p "Enter interface name: " interface
@@ -117,13 +117,12 @@ echo "Getting IPV4 address and name for interface $interface"
 	network_name=$(getent networks $network_number|awk '{print $1}')
 	;;
 	esac
-	echo	"Interface $interface:"
+        echo	"Interface $interface:"
 	echo	"==============="
 	echo	"Address         : $ipv4_address"
 	echo	"Name            : $ipv4_hostname"
 	echo	"Network Address : $network_address"
-	echo	"Network Name    : $network_name"
-
+	echo	"Network Name    : $network_name"      	
 done
 
 
@@ -143,25 +142,6 @@ ipv4_hostname=$(getent hosts $ipv4_address | awk '{print $2}')
 network_address=$(ip route list dev $interface scope link|cut -d ' ' -f 1)
 network_number=$(cut -d / -f 1 <<<"$network_address")
 network_name=$(getent networks $network_number|awk '{print $interface}')
-
-#Script for the task 2###
-netstat -i | awk '{print $1}' | tail -n +3 | head -n -1 > list.txt
-list=$(cat list.txt)
-echo "The available interfaces are: "
-cat list.txt
-for interface in $list;do
-        ipv4_address=$(ip a s $interface|awk -F '[/ ]+' '/inet /{print $3}')
-        ipv4_hostname=$(getent hosts $ipv4_address | awk '{print $2}')
-        network_address=$(ip route list dev $interface scope link|cut -d ' ' -f 1)
-        network_number=$(cut -d / -f 1 <<<"$network_address")
-        network_name=$(getent networks $network_number|awk '{print $1}')
-        echo    "Interface $interface:"
-        echo    "==============="
-        echo    "Address         : $ipv4_address"
-        echo    "Name            : $ipv4_hostname"
-        echo    "Network Address : $network_address"
-        echo    "Network Name    : $network_name"
-done
 
 cat <<EOF
 
