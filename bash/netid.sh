@@ -93,7 +93,7 @@ while [ $i -gt 0 ]; do
 	case $verbose in
 	yes) echo "Reporting on interface(s): $interface"
 
-echo "Getting IPV4 address and name for interface $interface"
+        echo "Getting IPV4 address and name for interface $interface"
 	# Find an address and hostname for the interface being summarized
 	# we are assuming there is only one IPV4 address assigned to this interface
 	ipv4_address=$(ip a s $interface|awk -F '[/ ]+' '/inet /{print $3}')
